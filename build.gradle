@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.5.7'
-	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.springframework.boot' version '4.1.1'
+	id 'io.spring.dependency-management' version '1.1.7'
 	// Apply the application plugin to add support for building a CLI application in Java.
 }
 
@@ -10,7 +10,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(25)
 	}
 }
 
@@ -20,7 +20,7 @@ repositories {
 
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
