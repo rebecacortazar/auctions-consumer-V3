@@ -1,3 +1,7 @@
+// Assisted by ChatGPT and GitHub Copilot for educational/demo purposes.
+// This example illustrates Spring Boot, bean-name lookup, interface-based design,
+// RestClient usage, and the factory-like pattern behind selecting a consumer.
+
 package es.apidemo;
 
 import org.slf4j.Logger;
@@ -15,8 +19,11 @@ import es.apidemo.consumer.IApiConsumer;
 public class ApiConsumerDemo implements CommandLineRunner {
 	private static final Logger log = LoggerFactory.getLogger(ApiConsumerDemo.class);
 
+	/**
+	 * This context is only injected to allow us to close the Spring application context at the end.
+	 */
 	@Autowired
-    private ConfigurableApplicationContext context;
+	private ConfigurableApplicationContext context;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiConsumerDemo.class, args);
@@ -29,8 +36,18 @@ public class ApiConsumerDemo implements CommandLineRunner {
 			e.printStackTrace();
 		}
 		
-		IApiConsumer consumer = ApiConsumer.getApiConsumer("ApiConsumer");
+		/**
+		 * This is very similar to a simple Factory: based on the chosen bean name,
+		 * we obtain the concrete consumer object that will make the REST request.
+		 * The complexity is hidden behind the IApiConsumer interface, so the caller
+		 * only depends on the common contract and not on the concrete implementation.
+		 */
+		IApiConsumer consumer = ApiConsumer.getApiConsumer("auctionConsumer");
 		
+		/**
+		 * This call represents the client request to the external REST API server.
+		 * The concrete consumer object hides the protocol details; we only invoke the shared interface.
+		 */
 		log.info("Testing first method: " + consumer.getCategories());
 		
 		try {
